@@ -34,8 +34,8 @@ class ControllerPaymentMultibanco extends Controller {
 
 			$comment  = '<div style=" border: 3px solid; margin: 10px; width: 170px; padding: 10px; ">';
 			$comment .= 'Entidade: <b>' . $this->config->get('multibanco_entidade'). '</b><br /><br />';
-			$comment .= 'Referência: <b>' . $this->GenerateMbRef($this->config->get('multibanco_entidade'),$this->config->get('multibanco_subentidade'),$this->session->data['order_id'], $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], FALSE)). '</b><br /><br />';
-			$comment .= 'Valor: <b>' . $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], TRUE). '</b><br />';
+			$comment .= 'Referência: <b>' . $this->GenerateMbRef($this->config->get('multibanco_entidade'),$this->config->get('multibanco_subentidade'),$this->session->data['order_id'], $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false)). '</b><br /><br />';
+			$comment .= 'Valor: <b>' . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false). '</b><br />';
 			$comment .= '</div>';
 
 			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('multibanco_order_status_id'), $comment, true);
