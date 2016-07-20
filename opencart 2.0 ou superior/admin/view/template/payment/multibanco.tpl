@@ -39,6 +39,12 @@
 					<input type="text" name="multibanco_subentidade" value="<?php echo $multibanco_subentidade; ?>" placeholder="<?php echo $entry_subentidade; ?>" id="input-subentidade" class="form-control" />
 				</div>
 			</div>
+      <div class="form-group required">
+				<label class="col-sm-2 control-label" for="input-valorminimo"><span data-toggle="tooltip"><?php echo $entry_valorminimo; ?></span></label>
+				<div class="col-sm-10">
+					<input type="text" name="multibanco_valorminimo" value="<?php echo $multibanco_valorminimo; ?>" placeholder="<?php echo $entry_valorminimo; ?>" id="input-valorminimo" class="form-control" />
+				</div>
+			</div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_status; ?></label>
             <div class="col-sm-10">
