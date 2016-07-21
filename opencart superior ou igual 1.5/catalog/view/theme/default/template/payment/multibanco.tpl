@@ -4,7 +4,7 @@
 				<td style="font-size: x-small; border-top: 0px; border-left: 0px; border-right: 0px; border-bottom: 1px solid #45829F; background-color: #45829F; color: White" colspan="3"><div align="center">Pagamento por Multibanco ou Homebanking</div></td>
 			</tr>
 			<tr>
-		        <td rowspan="3"><div align="center"><img src="http://img412.imageshack.us/img412/9672/30239592.jpg" alt="" width="52" height="60"/></div></td>
+		        <td rowspan="3"><div align="center"><img src="https://dl.dropboxusercontent.com/u/1966551/mb_logo_large.png" alt="" width="52" height="60"/></div></td>
 		        <td style="font-size: x-small; font-weight:bold; text-align:left">Entidade:</td>
 		        <td style="font-size: x-small; text-align:left"><?php echo $entry_entidade; ?></td>
 			</tr>

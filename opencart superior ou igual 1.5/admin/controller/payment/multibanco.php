@@ -26,6 +26,7 @@ class ControllerPaymentMultibanco extends Controller {
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
 		$this->data['entry_entidade'] = $this->language->get('entry_entidade');			
 		$this->data['entry_subentidade'] = $this->language->get('entry_subentidade');	
+		$this->data['entry_valorminimo'] = $this->language->get('entry_valorminimo');	
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
@@ -76,6 +77,12 @@ class ControllerPaymentMultibanco extends Controller {
 			$this->data['multibanco_subentidade'] = $this->request->post['multibanco_subentidade'];
 		} else {
 			$this->data['multibanco_subentidade'] = $this->config->get('multibanco_subentidade'); 
+		}
+
+		if (isset($this->request->post['multibanco_valorminimo'])) {
+			$this->data['multibanco_valorminimo'] = $this->request->post['multibanco_valorminimo'];
+		} else {
+			$this->data['multibanco_valorminimo'] = $this->config->get('multibanco_valorminimo'); 
 		}
 				
 		if (isset($this->request->post['multibanco_order_status_id'])) {

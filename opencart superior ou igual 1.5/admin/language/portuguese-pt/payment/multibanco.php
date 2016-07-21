@@ -10,6 +10,7 @@ $_['text_multibanco']	      = '<a onclick="window.open(\'http://www.ifthensoftwa
 // Entry
 $_['entry_entidade']        = 'Entidade';
 $_['entry_subentidade']        = 'Sub-Entidade';
+$_['entry_valorminimo']        = 'Valor Mínimo';
 $_['entry_order_status'] = 'Estado da Encomenda:';
 $_['entry_geo_zone']     = 'Zona Geográfica:';
 $_['entry_status']       = 'Estado:';
