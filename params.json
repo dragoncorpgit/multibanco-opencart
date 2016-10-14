@@ -1,0 +1,6 @@
+{
+  "name": "Multibanco-opencart",
+  "tagline": "Ifthenpay module for OpenCart",
+  "body": "Ifthenpay module for OpenCart\r\n==============\r\n![Multibanco](https://raw.githubusercontent.com/ifthenpay/omnipay-ifthenpay/master/mb.png)\r\n\r\n**This is the Ifthenpay module for OpenCart CMS**\r\n\r\nMultibanco is one Portuguese payment method that allows the customer to pay by bank reference.\r\nThis plugin will allow you to generate a payment Reference that the customer can then use to pay for his order on the ATM or Home Banking service. This plugin uses one of the several gateways/services available in Portugal, IfthenPay, and a contract with this company is required. See more at [Ifthenpay](https://ifthenpay.com).\r\n\r\n# Instructions\r\n\r\nInstructions are available inside each folder regarding each version of OpenCart.",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
