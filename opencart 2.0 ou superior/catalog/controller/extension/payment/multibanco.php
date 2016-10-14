@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentMultibanco extends Controller {
+class ControllerExtensionPaymentMultibanco extends Controller {
 	public function index() {
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
