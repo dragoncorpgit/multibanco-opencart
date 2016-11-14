@@ -16,13 +16,13 @@ class ControllerExtensionPaymentMultibanco extends Controller {
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/multibanco.tpl')) {
 			return $this->load->view($this->config->get('config_template') . '/template/payment/multibanco.tpl', $data);
 		} else {
-			return $this->load->view('payment/multibanco.tpl', $data);
+			return $this->load->view('default/template/payment/multibanco.tpl', $data);
 		}
 	}
 
 	public function version(){
 
-		echo "5.0.1";
+		echo "5.0.2";
 	}
 
 	public function confirm() {
