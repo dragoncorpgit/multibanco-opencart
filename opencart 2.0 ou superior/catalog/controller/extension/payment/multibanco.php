@@ -1,5 +1,6 @@
 <?php
 class ControllerExtensionPaymentMultibanco extends Controller {
+
 	public function index() {
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
@@ -13,16 +14,12 @@ class ControllerExtensionPaymentMultibanco extends Controller {
 
 		$data['continue'] = $this->url->link('checkout/success');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/multibanco.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/multibanco.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/multibanco.tpl', $data);
-		}
+		return $this->load->view('extension/payment/multibanco', $data);
 	}
 
 	public function version(){
 
-		echo "5.0.2";
+		echo "5.0.3";
 	}
 
 	public function confirm() {
