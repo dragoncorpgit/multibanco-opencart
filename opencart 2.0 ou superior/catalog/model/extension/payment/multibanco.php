@@ -28,5 +28,30 @@
 
 	    	return $method_data;
 	  	}
+
+		public function getVersion(){
+			return $this->db->query("SELECT max(versao) as versao FROM `" . DB_PREFIX . "ifthenpay_version`")->row;
+		}
+
+		public function getOrderIdByIfthenpayData($entidade, $referencia, $valor){
+			return $this->db->query("SELECT multibanco_id, order_id FROM `" . DB_PREFIX . "ifthenpay_multibanco` WHERE entidade='" . $this->db->escape($entidade) . "' and referencia='" . $this->db->escape($referencia) . "' and valor like '" . $this->db->escape($valor) . "%' and estado = 0 ORDER BY multibanco_id desc limit 1")->row;
+		}
+
+		public function setIfthenpayDataStatus($id){
+			$this->db->query("UPDATE `" . DB_PREFIX . "ifthenpay_multibanco` SET estado='1' WHERE multibanco_id='" . $this->db->escape($id) . "'");
+		}
+
+		public function getIfthenpayData($order_id){
+			return $this->db->query("SELECT * FROM " . DB_PREFIX . "ifthenpay_multibanco WHERE order_id = '" . $this->db->escape($order_id) . "'")->rows;
+		}
+
+		public function setIfthenpayData($order_id, $entidade, $referencia, $valor, $status=0){
+			$this->db->query("
+INSERT INTO 
+" . DB_PREFIX . "ifthenpay_multibanco (order_id, entidade, referencia, valor, estado) 
+VALUES 
+('" . $this->db->escape($order_id) . "','" . $this->db->escape($entidade) . "','" . $this->db->escape(str_replace(" ","",$referencia)) . "','" . $this->db->escape($valor) . "','" . $this->db->escape($status) . "') 
+ON DUPLICATE KEY UPDATE estado = '" . $this->db->escape($status) . "'");
+		}
 	}
 ?>

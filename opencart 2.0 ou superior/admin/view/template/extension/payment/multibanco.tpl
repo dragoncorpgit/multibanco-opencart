@@ -19,6 +19,26 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
+
+
+    <?php if ($text_success) { ?>
+    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $text_success; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+
+    <script>
+      $( document ).ready(function() {
+        $.ajax({
+
+          url: "<?php echo $url_set_modification; ?>"
+
+        }).done(function(data) {
+          console.log("<?php echo $text_success; ?>");
+        });
+      });
+    </script>
+    <?php } ?>
+
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-pencil"></i> <img src="view/image/payment/multibanco.png" alt="" /></h3>
@@ -46,11 +66,25 @@
 				</div>
 			</div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_status; ?></label>
+            <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
             <div class="col-sm-10">
               <select name="multibanco_order_status_id" id="multibanco_order_status_id" class="form-control">
                 <?php foreach ($order_statuses as $order_status) { ?>
                 <?php if ($order_status['order_status_id'] == $multibanco_order_status_id) { ?>
+                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status_complete; ?></label>
+            <div class="col-sm-10">
+              <select name="multibanco_order_status_complete_id" id="multibanco_order_status_complete_id" class="form-control">
+                <?php foreach ($order_statuses as $order_status) { ?>
+                <?php if ($order_status['order_status_id'] == $multibanco_order_status_complete_id) { ?>
                 <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                 <?php } else { ?>
                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
@@ -92,6 +126,13 @@
             <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
             <div class="col-sm-10">
               <input type="text" name="multibanco_sort_order" value="<?php echo $multibanco_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_cb; ?></label>
+            <div class="col-sm-10">
+              <?php echo $entry_url; ?> <?php echo $multibanco_url; ?><br/><br/>
+              <?php echo $entry_ap; ?> <?php echo ($multibanco_show_ap?$multibanco_ap:""); ?><br/><input type="hidden" name="multibanco_ap" value="<?php echo $multibanco_ap; ?>"  id="input-sort-order" class="form-control" />
             </div>
           </div>
         </form>

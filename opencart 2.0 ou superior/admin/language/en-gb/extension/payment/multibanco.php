@@ -12,9 +12,13 @@ $_['entry_entidade']        = 'Entity';
 $_['entry_subentidade']        = 'Sub-Entity';
 $_['entry_valorminimo']        = 'Minimum Value';
 $_['entry_order_status'] = 'Order Status:';
+$_['entry_order_status_complete'] = 'Order Status Paid:';
 $_['entry_geo_zone']     = 'Geo Zone:';
 $_['entry_status']       = 'Status:';
 $_['entry_sort_order']   = 'Sort Order:';
+$_['entry_cb']   = 'Callback:';
+$_['entry_ap']   = 'Anti-Phishing Key:';
+$_['entry_url']   = 'Url Callback:';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify payment Cash On Delivery!';

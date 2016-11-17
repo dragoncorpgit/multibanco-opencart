@@ -3,13 +3,6 @@ class ControllerExtensionPaymentMultibanco extends Controller {
 
 	public function index() {
 
-		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-
-		$data['entry_entidade']=$this->config->get('multibanco_entidade');
-		$data['entry_referencia'] = $this->GenerateMbRef($this->config->get('multibanco_entidade'),$this->config->get('multibanco_subentidade'),$this->session->data['order_id'], $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false));
-		$data['entry_valor'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
-
-
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
 		$data['continue'] = $this->url->link('checkout/success');
@@ -18,24 +11,64 @@ class ControllerExtensionPaymentMultibanco extends Controller {
 	}
 
 	public function version(){
+		$this->load->model('extension/payment/multibanco');
+		echo $this->model_extension_payment_multibanco->getVersion()["versao"];
+	}
 
-		echo "5.0.3";
+	public function callback(){
+		$chave_ap_int = $this->config->get('multibanco_ap');
+		$chave_ap_ext = $this->request->get['chave'];
+		$entidade = $this->request->get['entidade'];
+		$referencia = $this->request->get['referencia'];
+		$valor = $this->request->get['valor'];
+
+		if($chave_ap_int==$chave_ap_ext) {
+
+			$this->load->model('extension/payment/multibanco');
+
+			$order_info_ip = $this->model_extension_payment_multibanco->getOrderIdByIfthenpayData($entidade, $referencia, $valor);
+
+			if ($order_info_ip) {
+				$this->load->model('checkout/order');
+
+				$order_info = $this->model_checkout_order->getOrder($order_info_ip["order_id"]);
+
+				$this->model_checkout_order->addOrderHistory($order_info["order_id"], $this->config->get('multibanco_order_status_complete_id'), date("d-m-Y H:m:s"), true);
+
+				$this->model_extension_payment_multibanco->setIfthenpayDataStatus($order_info_ip["multibanco_id"]);
+			}
+
+			echo "Ok";
+			return;
+		}
+		echo "NOT_OK";
 	}
 
 	public function confirm() {
 		if ($this->session->data['payment_method']['code'] == 'multibanco') {
 			$this->load->model('checkout/order');
+			$this->load->model('extension/payment/multibanco');
 
 			$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
+			$entidade = $this->config->get('multibanco_entidade');
+			$referencia = $this->GenerateMbRef($this->config->get('multibanco_entidade'),$this->config->get('multibanco_subentidade'),$this->session->data['order_id'], $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false));
+			$valor = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
+
 
 			$comment  = '<div style=" border: 3px solid; margin: 10px; width: 170px; padding: 10px; ">';
-			$comment .= 'Entidade: <b>' . $this->config->get('multibanco_entidade'). '</b><br /><br />';
-			$comment .= 'Referência: <b>' . $this->GenerateMbRef($this->config->get('multibanco_entidade'),$this->config->get('multibanco_subentidade'),$this->session->data['order_id'], $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false)). '</b><br /><br />';
-			$comment .= 'Valor: <b>' . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false). '</b><br />';
+			$comment .= 'Entidade: <b>' . $entidade. '</b><br /><br />';
+			$comment .= 'Referência: <b>' . $referencia . '</b><br /><br />';
+			$comment .= 'Valor: <b>' . $valor . '</b><br />';
 			$comment .= '</div>';
 
+
+			$teste = $this->url->link('common/home');
+
 			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('multibanco_order_status_id'), $comment, true);
+
+
+			$this->model_extension_payment_multibanco->setIfthenpayData($order_info['order_id'], $entidade, $referencia, $valor);
 
 		}
 	}
