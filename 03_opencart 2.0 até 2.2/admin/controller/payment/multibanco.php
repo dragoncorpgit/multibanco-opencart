@@ -1,11 +1,11 @@
 <?php
-class ControllerExtensionPaymentMultibanco extends Controller {
+class ControllerPaymentMultibanco extends Controller {
 	private $error = array();
 
 	public function index() {
 		$this->checkUpdate();
 
-		$this->load->language('extension/payment/multibanco');
+		$this->load->language('payment/multibanco');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -26,7 +26,7 @@ class ControllerExtensionPaymentMultibanco extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment/multibanco', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('payment/multibanco', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -75,10 +75,10 @@ class ControllerExtensionPaymentMultibanco extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/multibanco', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('payment/multibanco', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
-		$data['action'] = $this->url->link('extension/payment/multibanco', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('payment/multibanco', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -159,10 +159,8 @@ class ControllerExtensionPaymentMultibanco extends Controller {
 
 		}
 
-		$url = new Url(HTTP_CATALOG, $this->config->get('config_secure') ? HTTP_CATALOG : HTTPS_CATALOG);
 
-
-		$data['multibanco_url'] = $url->link('extension/payment/multibanco/callback') . "&chave=[CHAVE_ANTI_PHISHING]&entidade=[ENTIDADE]&referencia=[REFERENCIA]&valor=[VALOR]";
+		$data['multibanco_url'] = ($this->config->get('config_secure') ? HTTP_CATALOG : HTTPS_CATALOG) . "index.php?route=payment/multibanco/callback&chave=[CHAVE_ANTI_PHISHING]&entidade=[ENTIDADE]&referencia=[REFERENCIA]&valor=[VALOR]";
 
 
 
@@ -170,11 +168,11 @@ class ControllerExtensionPaymentMultibanco extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/payment/multibanco.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/multibanco.tpl', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/payment/multibanco')) {
+		if (!$this->user->hasPermission('modify', 'payment/multibanco')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -185,8 +183,7 @@ class ControllerExtensionPaymentMultibanco extends Controller {
 
 		$entidade = $this->request->post['multibanco_entidade'];
 		$subentidade = $this->request->post['multibanco_subentidade'];
-		$url = new Url(HTTP_CATALOG, $this->config->get('config_secure') ? HTTP_CATALOG : HTTPS_CATALOG);
-		$url_cb = $url->link('extension/payment/multibanco/callback') . "&chave=[CHAVE_ANTI_PHISHING]&entidade=[ENTIDADE]&referencia=[REFERENCIA]&valor=[VALOR]";
+		$url_cb = ($this->config->get('config_secure') ? HTTP_CATALOG : HTTPS_CATALOG) . "index.php?route=payment/multibanco/callback&chave=[CHAVE_ANTI_PHISHING]&entidade=[ENTIDADE]&referencia=[REFERENCIA]&valor=[VALOR]";
 
 		$ap_key_cb = $this->request->post['multibanco_ap'];
 
@@ -228,15 +225,15 @@ class ControllerExtensionPaymentMultibanco extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('extension/payment/multibanco');
+		$this->load->model('payment/multibanco');
 
-		$this->model_extension_payment_multibanco->install();
+		$this->model_payment_multibanco->install();
 	}
 
 	public function checkUpdate() {
-		$this->load->model('extension/payment/multibanco');
+		$this->load->model('payment/multibanco');
 
-		$this->model_extension_payment_multibanco->update();
+		$this->model_payment_multibanco->update();
 	}
 }
 ?>

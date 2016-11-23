@@ -11,15 +11,31 @@ class ModelExtensionPaymentMultibanco extends Model {
             return false;
         }
 
-        return ($val["versao"]==$version);
+        return (empty($val["versao"])?false:$val["versao"]==$version);
     }
 
-	public function install() {
-        $this->update510();
-	}
+    public function install() {
+        $this->update();
+    }
 
     public function update() {
         $this->update510();
+        $this->update511();
+    }
+
+    private function update511()
+    {
+
+        $version = "5.1.1";
+
+        if ($this->checkVersionExist($version))
+            return;
+
+        $changes = "
+		<li>Pequenas correções</li>
+		";
+
+        $this->db->query("INSERT IGNORE INTO `" . DB_PREFIX . "ifthenpay_version` (versao, observacao) VALUE ('$version', '$changes')");
     }
 
 	private function update510(){
