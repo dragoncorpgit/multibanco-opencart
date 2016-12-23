@@ -62,14 +62,8 @@ class ControllerExtensionPaymentMultibanco extends Controller {
 			$comment .= 'Valor: <b>' . $valor . '</b><br />';
 			$comment .= '</div>';
 
-
-			$teste = $this->url->link('common/home');
-
-			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('multibanco_order_status_id'), $comment, true);
-
-
 			$this->model_extension_payment_multibanco->setIfthenpayData($order_info['order_id'], $entidade, $referencia, $valor);
-
+			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('multibanco_order_status_id'), $comment, true);
 		}
 	}
 
